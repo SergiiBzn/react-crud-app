@@ -24,11 +24,11 @@ const CreateEvent = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/events', {
+      const response = await fetch('http://localhost:3001/api/events', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(form),
       });
@@ -55,3 +55,4 @@ const CreateEvent = () => {
 };
 
 export default CreateEvent;
+
