@@ -26,11 +26,11 @@ const EventDetailsPage = () => {
 
     })
     .then((data) => {
-      setEvent(data);
-      setLoading(false);
-      console.log("Event ID from URL:", id);
-console.log("Fetched event:", event);
-    })
+  setEvent(data);
+  setLoading(false);
+  console.log("Event ID from URL:", id);
+  console.log("Fetched event:", data);
+})
     .catch((err) => {
       setError(err.message);
       setLoading(false);
