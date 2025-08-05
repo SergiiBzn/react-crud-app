@@ -1,18 +1,20 @@
-import React from 'react'
+import { Link } from 'react-router-dom';
 
-const EventCard = () => {
+const EventCard = ({ event }) => {
   return (
-<div className="card shadow-md bg-base-100">
-  <div className="card-body">
-    <h2 className="card-title">{event.title}</h2>
-    <p>{event.description}</p>
-    <div className="card-actions justify-end">
-      <Link to={`/events/${event.id}`} className="btn btn-primary">Details</Link>
-    </div>
-  </div>
-</div>
+    <Link
+      to={`/events/${event.id}`}
+      className="block bg-blue-200 shadow-md rounded-lg p-4 hover:shadow-lg transition-all"
+    >
+      <h3 className=" text-3xl font-semibold text-blue-900 mb-2">{event.title}</h3>
+      <p className="text-sm text-gray-500">
+        📅 {new Date(event.date).toLocaleDateString()}
+      </p>
+      <p className="text-gray-700 mt-2">
+        {event.description?.substring(0, 100) ?? 'Keine Beschreibung verfügbar'}...
+      </p>
+    </Link>
+  );
+};
 
-  )
-}
-
-export default EventCard
+export default EventCard;
