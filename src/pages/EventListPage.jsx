@@ -20,7 +20,8 @@ const EventListPage = () => {
         setLoading(false);
       })
       .catch(err => {
-        setError(err.message); // Fehler speichern
+        console.error("Fetch error:", err);
+        setError(err.message || 'Unknown error'); // Fehler speichern
         setLoading(false); 
       });
   }, []); // [] bedeutet: dieser Code läuft nur einmal beim Start
@@ -33,13 +34,13 @@ const EventListPage = () => {
      
       {events.map(event => (
         <Link
-          key={event.id}
+          key={`${event.title}-${event.date}`}
           to={`/events/${event.id}`} // Link zu der Detailseite vom Event
           className="border p-4 rounded shadow hover:bg-gray-100"
         >
           <h3 className="font-bold">{event.title}</h3> {/* Titel */}
           <p>{new Date(event.date).toLocaleDateString()}</p> 
-          <p>{event.description.substring(0, 100)}...</p> {/* Vorschau vom Text (max 100 Zeichen) */}
+          <p>{event.description.substring(0, 100) ?? 'Keine Beschreibung verfügbar'}...</p> {/* Vorschau vom Text (max 100 Zeichen) */}
         </Link>
       ))}
     </div>
