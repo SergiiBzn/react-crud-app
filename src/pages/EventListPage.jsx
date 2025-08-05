@@ -7,23 +7,31 @@ const EventListPage = () => {
   const [error, setError] = useState(null); // Speichert Fehlermeldung, 
 
   useEffect(() => {
-    // API-Aufruf startet direkt beim Laden der Seite
-    fetch('http://localhost:3001/api/events')
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch events'); 
-        return res.json(); 
-      })
-      .then(data => {
-        // Events nach Datum sortieren (älteste zuerst)
-        const sortedEvents = data.results.sort((a, b) => new Date(a.date) - new Date(b.date));
-        setEvents(sortedEvents); // Events in State speichern
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message); // Fehler speichern
-        setLoading(false); 
-      });
-  }, []); // [] bedeutet: dieser Code läuft nur einmal beim Start
+  const token = localStorage.getItem("token");
+  console.log("Token used:", token); // ✅ check token
+
+  fetch('http://localhost:3001/api/events', {
+    headers: {
+      Authorization: token ? `Bearer ${token}` : "",
+    },
+  })
+    .then(res => {
+      console.log("Response status:", res.status);
+      if (!res.ok) throw new Error('Failed to fetch events');
+      return res.json();
+    })
+    .then(data => {
+      console.log("Fetched events data:", data); // ✅ Show fetched data
+      const sortedEvents = data.results.sort((a, b) => new Date(a.date) - new Date(b.date));
+      setEvents(sortedEvents);
+      setLoading(false);
+    })
+    .catch(err => {
+      console.error("Error fetching events:", err.message); // ✅ Show any errors
+      setError(err.message);
+      setLoading(false);
+    });
+}, []);
 
   if (loading) return <p>Loading Event...</p>; // Zeigt "Loading" wenn Daten noch nicht geladen sind
   if (error) return <p>Error: Something wrong!: {error}</p>; 
