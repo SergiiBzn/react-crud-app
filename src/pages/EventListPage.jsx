@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'; 
 import { Link } from 'react-router-dom'; 
+import EventCard from '../components/EventCard';
 
 const EventListPage = () => {
   const [events, setEvents] = useState([]); 
@@ -38,18 +39,9 @@ useEffect(() => {
   if (error) return <p>Error: Something wrong!: {error}</p>; 
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-     
+  <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
       {events.map(event => (
-        <Link
-          key={`${event.title}-${event.date}`}
-          to={`/events/${event.id}`} // Link zu der Detailseite vom Event
-          className="border p-4 rounded shadow hover:bg-gray-100"
-        >
-          <h3 className="font-bold">{event.title}</h3> {/* Titel */}
-          <p>{new Date(event.date).toLocaleDateString()}</p> 
-          <p>{event.description.substring(0, 100) ?? 'Keine Beschreibung verfügbar'}...</p> {/* Vorschau vom Text (max 100 Zeichen) */}
-        </Link>
+        <EventCard key={event.id} event={event} />
       ))}
     </div>
   );
