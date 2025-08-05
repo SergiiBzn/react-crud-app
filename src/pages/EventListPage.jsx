@@ -6,8 +6,7 @@ const EventListPage = () => {
   const [loading, setLoading] = useState(true); // Zeigt an, ob die Seite noch lädt
   const [error, setError] = useState(null); // Speichert Fehlermeldung, 
 
-  useEffect(() => {
-
+useEffect(() => {
   const token = localStorage.getItem("token");
   console.log("Token used:", token); // ✅ check token
 
@@ -33,25 +32,6 @@ const EventListPage = () => {
       setLoading(false);
     });
 }, []);
-
-    // API-Aufruf startet direkt beim Laden der Seite
-    fetch('http://localhost:3001/api/events')
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch events'); 
-        return res.json(); 
-      })
-      .then(data => {
-        // Events nach Datum sortieren (älteste zuerst)
-        const sortedEvents = data.results.sort((a, b) => new Date(a.date) - new Date(b.date));
-        setEvents(sortedEvents); // Events in State speichern
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Fetch error:", err);
-        setError(err.message || 'Unknown error'); // Fehler speichern
-        setLoading(false); 
-      });
-  }, []); // [] bedeutet: dieser Code läuft nur einmal beim Start
 
 
   if (loading) return <p>Loading Event...</p>; // Zeigt "Loading" wenn Daten noch nicht geladen sind
