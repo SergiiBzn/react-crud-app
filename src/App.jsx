@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import CreateEvent from './pages/CreatEventPage';
 import EventListPage from './pages/EventListPage';
 import EventDetailPage from './pages/EventDetailsPage';
+import ProtectedRoutes from  './components/ProtectedRoutes'
 
 const App = () => {
   return (

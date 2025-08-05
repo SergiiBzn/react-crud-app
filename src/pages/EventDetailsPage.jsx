@@ -1,6 +1,6 @@
 
 
-import  { useParans } from 'react-router-dom';
+import  { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react'; 
 
 
@@ -36,7 +36,9 @@ const EventDetailsPage = () => {
      }, [id])
 
 
-
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!event) return <p>No event found</p>;
 
 
 
