@@ -1,7 +1,8 @@
-import React from 'react'
+
 
 import  { useParans } from 'react-router-dom';
 import { useState, useEffect } from 'react'; 
+
 
 const EventDetailsPage = () => {
    const { id } = useParams(); 
