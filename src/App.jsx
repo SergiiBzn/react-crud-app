@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';  // هنا أيضاً react-ro
 import ProtectedRoutes from './components/ProtectedRoutes';
 import CreateEvent from './pages/CreatEventPage';
 import EventListPage from './pages/EventListPage';
-import EventDetailPage from './pages/EventDetailsPage';
+// import EventDetailPage from './pages/EventDetailsPage';
 
 const App = () => {
   return (
@@ -12,9 +12,11 @@ const App = () => {
       
       <Route element={<ProtectedRoutes />}>
         <Route path='/create-event' element={<CreateEvent />} />
-        <Route path='/events/:id' element={<EventDetailPage />} />
+        {/* <Route path='/events/:id' element={<EventDetailPage />} /> */}
+
       </Route>
     </Routes>
+    
   );
 };
 
