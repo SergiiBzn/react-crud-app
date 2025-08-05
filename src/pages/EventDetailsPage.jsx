@@ -1,7 +1,7 @@
 
 
 import  { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react'; 
+import { useState, useEffect } from 'react';   
 
 
 const EventDetailsPage = () => {
@@ -28,6 +28,8 @@ const EventDetailsPage = () => {
     .then((data) => {
       setEvent(data);
       setLoading(false);
+      console.log("Event ID from URL:", id);
+console.log("Fetched event:", event);
     })
     .catch((err) => {
       setError(err.message);

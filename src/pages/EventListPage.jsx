@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; 
 import EventCard from '../components/EventCard';
 
+
 const EventListPage = () => {
   const [events, setEvents] = useState([]); 
   const [loading, setLoading] = useState(true); // Zeigt an, ob die Seite noch lädt
