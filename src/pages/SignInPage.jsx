@@ -18,7 +18,7 @@ export default function SignInPage() {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('apiToken', data.token);
+        localStorage.setItem('token', data.token);
         navigate ('/'); // Erfolgreich eingeloggt
       } else {
         const data = await response.json();
@@ -26,6 +26,7 @@ export default function SignInPage() {
       }
     } catch (err) {
       setError('Serverfehler bei der Anmeldung.');
+      console.log(err);
     }
   };
 
