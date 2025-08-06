@@ -1,29 +1,32 @@
 import { Routes, Route } from "react-router-dom";
-import CreateEvent from "./pages/CreatEventPage";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedLayout from "./layouts/ProtectedLayout";
+import MainLayout from "./layouts/MainLayout";
+
 import EventListPage from "./pages/EventListPage";
-import EventDetailsPage from "./pages/EventDetailsPage";
-import ProtectedRoutes from "./components/ProtectedRoutes";
-import Layout from "./components/Layout";
-import SignInPage from "./pages/SignInPage";
+import SignInPage from "./pages/SignInPage"; 
 import SignUpPage from "./pages/SignUpPage";
+import CreateEvent from "./pages/CreatEventPage";
+import EventDetailsPage from "./pages/EventDetailsPage";
 
 const App = () => {
   return (
-    
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<EventListPage />} />
-        <Route path="Signin" element={<SignInPage />} />
-        <Route path="Signup" element={<SignUpPage />} />
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          {/* Öffentliche Routen */}
+          <Route index element={<EventListPage />} />
+          <Route path="signin" element={<SignInPage />} />
+          <Route path="signup" element={<SignUpPage />} />
 
-        <Route element={<ProtectedRoutes />}>
-          <Route path="create-event" element={<CreateEvent />} />
-
-          <Route path="events/:id" element={<EventDetailsPage />} />
+          {/* Geschützte Routen */}
+          <Route element={<ProtectedLayout />}>
+            <Route path="create-event" element={<CreateEvent />} />
+            <Route path="events/:id" element={<EventDetailsPage />} />
+          </Route>
         </Route>
-      </Route>
-    </Routes>
-  
+      </Routes>
+    </AuthProvider>
   );
 };
 

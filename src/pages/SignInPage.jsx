@@ -1,14 +1,17 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function SignInPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
+
     try {
       const response = await fetch('http://localhost:3001/api/auth/login', {
         method: 'POST',
@@ -18,15 +21,19 @@ export default function SignInPage() {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('token', data.token);
-        navigate ('/'); // Erfolgreich eingeloggt
+
+        login({ email, token: data.token });
+        navigate('/');
+
       } else {
         const data = await response.json();
-        setError(data.message || 'Anmeldung fehlgeschlagen.');
+        setError(data.message || 'Login fehlgeschlagen');
       }
     } catch (err) {
+
       setError('Serverfehler bei der Anmeldung.');
       console.log(err);
+
     }
   };
 
