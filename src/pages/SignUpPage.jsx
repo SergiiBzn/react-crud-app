@@ -15,22 +15,34 @@ export default function SignUpPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-
+ const data = await response.json();
       if (response.ok) {
         // Erfolgreich registriert → zur Anmeldung weiterleiten
         navigate('/signin');
-      } else {
-        const data = await response.json();
-        setError(data.message || 'Registrierung fehlgeschlagen.');
+        
+      } else  {
+      if ( response.status === 409){
+ setError( 'Benutzer  existiert , Sie müssen anmelden.');
+      }else if (response.status === 400) {
+          setError(` ${data.error || 'Ungültige Eingabe.'}`);
+        }
+        else {
+          setError(data.error || ' Registrierung fehlgeschlagen.');
+        }
+    
+       
       }
     } catch (err) {
       setError('Serverfehler bei der Registrierung.');
+      console.log(err)
     }
   };
 
   return (
     <div className="p-6 max-w-sm mx-auto bg-white rounded shadow">
       <h2 className="text-xl font-bold mb-4">Sign Up</h2>
+
+      
       <form onSubmit={handleSignUp} className="space-y-4">
         <input
           type="email"

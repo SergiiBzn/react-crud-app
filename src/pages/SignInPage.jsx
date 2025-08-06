@@ -21,14 +21,19 @@ export default function SignInPage() {
 
       if (response.ok) {
         const data = await response.json();
+
         login({ email, token: data.token });
         navigate('/');
+
       } else {
         const data = await response.json();
         setError(data.message || 'Login fehlgeschlagen');
       }
     } catch (err) {
-      setError('Serverfehler');
+
+      setError('Serverfehler bei der Anmeldung.');
+      console.log(err);
+
     }
   };
 

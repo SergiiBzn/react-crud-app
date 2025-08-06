@@ -45,17 +45,22 @@ const EventDetailsPage = () => {
 
 
   return (
-    <div>
-       <div className="p-4 max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold mb-2">{event.title}</h1>
-      <p className="text-gray-600 mb-2">
-        Date: {new Date(event.date).toLocaleDateString()}
-      </p>
-      <p>{event.description}</p>
+    <div className="flex justify-center items-center min-h-screen bg-[url('/bg.jpg')] bg-cover bg-center p-4">
+      <div className="w-full max-w-2xl bg-white/60 backdrop-blur-md shadow-xl rounded-2xl p-8">
+        <h1 className="text-4xl font-bold text-blue-900 mb-4 text-center">
+          {event.title}
+        </h1>
+        <p className="text-md font-medium text-gray-700 text-center mb-2">
+          📅 {new Date(event.date).toLocaleDateString()}
+        </p>
+        <p className="text-gray-800 text-lg leading-relaxed text-center">{event.description}</p>
+      </div>
     </div>
-    </div>
-  )
-}
+  );
+};
+    
+  
+
 
 export default EventDetailsPage
 
