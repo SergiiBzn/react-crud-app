@@ -21,6 +21,8 @@ export default function SignInPage() {
 
       if (response.ok) {
         const data = await response.json();
+         localStorage.setItem('userId', data.user.id);
+  localStorage.setItem('token', data.token);
 
         login({ email, token: data.token });
         navigate('/');
