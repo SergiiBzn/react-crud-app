@@ -4,7 +4,7 @@ const EventCard = ({ event }) => {
   return (
     <Link
       to={`/events/${event.id}`}
-      className="block bg-blue-200 shadow-md rounded-lg p-4 hover:shadow-lg transition-all"
+      className="block  mt-15 bg-white/60 backdrop-blur-md shadow-md rounded-lg p-4 hover:shadow-lg transition-all"
     >
       <h3 className=" text-3xl font-semibold text-blue-900 mb-2">{event.title}</h3>
       <p className="text-sm text-gray-500">

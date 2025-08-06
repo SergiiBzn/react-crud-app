@@ -21,6 +21,8 @@ export default function SignInPage() {
 
       if (response.ok) {
         const data = await response.json();
+         localStorage.setItem('userId', data.user.id);
+  localStorage.setItem('token', data.token);
 
         login({ email, token: data.token });
         navigate('/');
@@ -35,9 +37,11 @@ export default function SignInPage() {
   };
 
   return (
-    <div className='p-6 max-w-sm mx-auto bg-white rounded shadow'>
-      <h2 className='text-xl font-bold mb-4'>Sign In</h2>
-      <form onSubmit={handleSignIn} className='space-y-4'>
+
+    <div className=" justify-center mt-20 rounded-2xl p-6 max-w-sm mx-auto bg-white/70 backdrop-blur-md  shadow">
+      <h2 className="text-xl font-bold mb-4">Sign In</h2>
+      <form onSubmit={handleSignIn} className="space-y-4">
+
         <input
           type='email'
           placeholder='E-Mail'
@@ -55,8 +59,10 @@ export default function SignInPage() {
           className='w-full border px-3 py-2 rounded'
         />
         <button
-          type='submit'
-          className='w-full bg-yellow-900 text-white py-2 rounded hover:bg-orange-800'
+
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-orange-800"
+
         >
           Anmelden
         </button>

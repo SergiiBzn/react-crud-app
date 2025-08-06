@@ -7,7 +7,7 @@ const Navbar = () => {
 
   return (
     <div className="relative">
-      <div className="navbar bg-gradient-to-r from-white/30 via-white/10 to-transparent text-black p-4 shadow-md backdrop-blur-md">
+      <div className="navbar   z-50 bg-gradient-to-r from-white/30 via-white/10 to-transparent text-black p-4 shadow-md backdrop-blur-md">
         <div className="navbar-start">
           <Link to="/" className="text-4xl font-bold text-gray-800">
             Events App

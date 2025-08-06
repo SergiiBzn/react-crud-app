@@ -38,8 +38,8 @@ useEffect(() => {
 }, []);
 
 
-  if (loading) return <p>Loading Event...</p>; // Zeigt "Loading" wenn Daten noch nicht geladen sind
-  if (error) return <p>Error: Something wrong!: {error}</p>; 
+  if (loading) return <p className='text-white text-2xl center '>Loading Event...</p>; // Zeigt "Loading" wenn Daten noch nicht geladen sind
+  if (error) return <p className = "text-white text-2xl center">Error: Something wrong!: {error}</p>; 
 
   return ( 
     <>

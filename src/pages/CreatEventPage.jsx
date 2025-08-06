@@ -57,12 +57,12 @@ const CreateEvent = () => {
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center bg-gray-100'>
+    <div className='min-h-screen flex items-center justify-center'>
       <form
         onSubmit={handleSubmit}
-        className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-lg'
+        className='bg-white/70 backdrop-blur-md rounded-3xl  shadow-md px-10 pt-20  pb-8 mb-4 w-full max-w-lg'
       >
-        <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>
+        <h2 className='text-3xl font-bold mb-6 text-center text-gray-800'>
           Create New Event
         </h2>
 
