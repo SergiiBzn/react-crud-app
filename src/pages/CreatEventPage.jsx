@@ -4,13 +4,12 @@ import fetchWithAuth from '../api/auth';
 
 const CreateEvent = () => {
   const [form, setForm] = useState({
-  title: '',
-  description: '',
-  date: '',
-  location: '',
-  latitude: '',
-  longitude: '',
-});
+    title: '',
+    description: '',
+    date: '',
+    location: '',
+    organizerId: 1,
+  });
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -18,116 +17,141 @@ const CreateEvent = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  const token = localStorage.getItem('token');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
 
-  if (!token) {
-    setError('You are not authorized');
-    return;
-  }
-
-  try {
-    const userId = localStorage.getItem('userId');
-
-const payload = {
-  ...form,
-  date: new Date(form.date).toISOString(),
-  latitude: parseFloat(form.latitude),
-  longitude: parseFloat(form.longitude),
-  organizerId: parseInt(userId), 
-};
-    const response = await fetchWithAuth('http://localhost:3001/api/events/get_api_events', {
-      method: 'POST',
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-     
-    
-      throw new Error('Failed to create event');
+    if (!token) {
+      setError('Kein Authorization!');
+      return;
     }
 
-    navigate('/');
-  } catch (err) {
-    console.error(' Error in handleSubmit:', err);
-    setError('Failed to create event');
-  }
-};
+    const { title, description, date, location, organizerId } = form;
+    if (!title || !description || !date || !location || !organizerId) {
+      setError('All fields are required.');
+      return;
+    }
 
+    try {
+      const response = await fetchWithAuth('http://localhost:3001/api/events', {
+        method: 'POST',
+        body: JSON.stringify(form),
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.message || 'Failed to create event');
+      }
+
+      navigate('/');
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+    }
+    setForm({
+      title: '',
+      description: '',
+      date: '',
+      location: '',
+    });
+  };
 
   return (
-<div style={{
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-    backgroundColor: '#f0f0f0',
-  }}>
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        backgroundColor: 'white',
-        padding: '2rem',
-        borderRadius: '8px',
-        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem',
-        width: '300px',
-      }}
-    >
-      <input
-        name='title'
-        value={form.title}
-        onChange={handleChange}
-        placeholder='Title'
-        required
-      />
-      <textarea
-        name='description'
-        value={form.description}
-        onChange={handleChange}
-        placeholder='Description'
-        required
-      />
-      <input
-        name='date'
-        type='date'
-        value={form.date}
-        onChange={handleChange}
-        required
-      />
-      <input
-  name='location'
-  value={form.location}
-  onChange={handleChange}
-  placeholder='Location'
-  required
-/>
+    <div className='min-h-screen flex items-center justify-center'>
+      <form
+        onSubmit={handleSubmit}
+        className='bg-white/70 backdrop-blur-md rounded-3xl  shadow-md px-10 pt-20  pb-8 mb-4 w-full max-w-lg'
+      >
+        <h2 className='text-3xl font-bold mb-6 text-center text-gray-800'>
+          Create New Event
+        </h2>
 
-<input
-  name='latitude'
-  type='number'
-  value={form.latitude}
-  onChange={handleChange}
-  placeholder='Latitude'
-  required
-/>
+        {error && (
+          <p className='text-red-500 text-sm mb-4 text-center'>{error}</p>
+        )}
 
-<input
-  name='longitude'
-  type='number'
-  value={form.longitude}
-  onChange={handleChange}
-  placeholder='Longitude'
-  required
-/>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button type='submit'>Create</button>
-    </form>
-  </div>
-);
+        <div className='mb-4'>
+          <label
+            className='block text-gray-700 text-sm font-bold mb-2'
+            htmlFor='title'
+          >
+            Title
+          </label>
+          <input
+            id='title'
+            name='title'
+            onChange={handleChange}
+            value={form.title}
+            required
+            className='shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline'
+            placeholder='Event title'
+          />
+        </div>
+
+        <div className='mb-4'>
+          <label
+            className='block text-gray-700 text-sm font-bold mb-2'
+            htmlFor='description'
+          >
+            Description
+          </label>
+          <textarea
+            id='description'
+            name='description'
+            onChange={handleChange}
+            value={form.description}
+            className='shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline'
+            placeholder='Event description'
+          />
+        </div>
+
+        <div className='mb-6'>
+          <label
+            className='block text-gray-700 text-sm font-bold mb-2'
+            htmlFor='date'
+          >
+            Date
+          </label>
+          <input
+            id='date'
+            name='date'
+            type='date'
+            onChange={handleChange}
+            value={form.date}
+            required
+            className='shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline'
+          />
+        </div>
+
+        <div className='mb-6'>
+          <label
+            className='block text-gray-700 text-sm font-bold mb-2'
+            htmlFor='location'
+          >
+            Location
+          </label>
+          <input
+            id='location'
+            name='location'
+            onChange={handleChange}
+            value={form.location}
+            required
+            className='shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline'
+            placeholder='Event location'
+          />
+        </div>
+
+        <div className='flex items-center justify-between'>
+          <button
+            type='submit'
+            className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+          >
+            Create Event
+          </button>
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default CreateEvent;

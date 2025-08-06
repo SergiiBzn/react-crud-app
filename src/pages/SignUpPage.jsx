@@ -39,7 +39,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="p-6 max-w-sm mx-auto bg-white rounded shadow">
+    <div className="justify-center mt-20 rounded-2xl p-6 max-w-sm mx-auto bg-white/70 backdrop-blur-md  shadow">
       <h2 className="text-xl font-bold mb-4">Sign Up</h2>
 
       
@@ -62,7 +62,7 @@ export default function SignUpPage() {
         />
         <button
           type="submit"
-          className="w-full bg-yellow-900 text-white py-2 rounded hover:bg-orange-800"
+          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-orange-800"
         >
           Registrieren
         </button>

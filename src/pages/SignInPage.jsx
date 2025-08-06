@@ -40,7 +40,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="p-6 max-w-sm mx-auto bg-white rounded shadow">
+    <div className=" justify-center mt-20 rounded-2xl p-6 max-w-sm mx-auto bg-white/70 backdrop-blur-md  shadow">
       <h2 className="text-xl font-bold mb-4">Sign In</h2>
       <form onSubmit={handleSignIn} className="space-y-4">
         <input
@@ -61,7 +61,7 @@ export default function SignInPage() {
         />
         <button
           type="submit"
-          className="w-full bg-yellow-900 text-white py-2 rounded hover:bg-orange-800"
+          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-orange-800"
         >
           Anmelden
         </button>
