@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import fetchWithAuth from '../api/auth';
 
 const CreateEvent = () => {
   const [form, setForm] = useState({
@@ -24,12 +25,8 @@ const CreateEvent = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3001/api/events', {
+      const response = await fetchWithAuth('http://localhost:3001/api/events', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify(form),
       });
 
@@ -55,4 +52,3 @@ const CreateEvent = () => {
 };
 
 export default CreateEvent;
-
