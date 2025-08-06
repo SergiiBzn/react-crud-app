@@ -7,6 +7,8 @@ const CreateEvent = () => {
     title: '',
     description: '',
     date: '',
+    location: '',
+    organizerId: 1,
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -20,7 +22,13 @@ const CreateEvent = () => {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      setError('You are not authorized');
+      setError('Kein Authoriyation!');
+      return;
+    }
+
+    const { title, description, date, location, organizerId } = form;
+    if (!title || !description || !date || !location || !organizerId) {
+      setError('All fields are required.');
       return;
     }
 
@@ -31,23 +39,118 @@ const CreateEvent = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create event');
+        const err = await response.json();
+        throw new Error(err.message || 'Failed to create event');
       }
+
       navigate('/');
     } catch (err) {
       console.error(err);
-      setError('Failed to create event');
+      setError(err.message);
     }
+    setForm({
+      title: '',
+      description: '',
+      date: '',
+      location: '',
+    });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input name='title' onChange={handleChange} required />
-      <textarea name='description' onChange={handleChange} required />
-      <input name='date' type='date' onChange={handleChange} required />
-      {error && <p>{error}</p>}
-      <button type='submit'>Create</button>
-    </form>
+    <div className='min-h-screen flex items-center justify-center bg-gray-100'>
+      <form
+        onSubmit={handleSubmit}
+        className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-lg'
+      >
+        <h2 className='text-2xl font-bold mb-6 text-center text-gray-800'>
+          Create New Event
+        </h2>
+
+        {error && (
+          <p className='text-red-500 text-sm mb-4 text-center'>{error}</p>
+        )}
+
+        <div className='mb-4'>
+          <label
+            className='block text-gray-700 text-sm font-bold mb-2'
+            htmlFor='title'
+          >
+            Title
+          </label>
+          <input
+            id='title'
+            name='title'
+            onChange={handleChange}
+            value={form.title}
+            required
+            className='shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline'
+            placeholder='Event title'
+          />
+        </div>
+
+        <div className='mb-4'>
+          <label
+            className='block text-gray-700 text-sm font-bold mb-2'
+            htmlFor='description'
+          >
+            Description
+          </label>
+          <textarea
+            id='description'
+            name='description'
+            onChange={handleChange}
+            value={form.description}
+            className='shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline'
+            placeholder='Event description'
+          />
+        </div>
+
+        <div className='mb-6'>
+          <label
+            className='block text-gray-700 text-sm font-bold mb-2'
+            htmlFor='date'
+          >
+            Date
+          </label>
+          <input
+            id='date'
+            name='date'
+            type='date'
+            onChange={handleChange}
+            value={form.date}
+            required
+            className='shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline'
+          />
+        </div>
+
+        <div className='mb-6'>
+          <label
+            className='block text-gray-700 text-sm font-bold mb-2'
+            htmlFor='location'
+          >
+            Location
+          </label>
+          <input
+            id='location'
+            name='location'
+            onChange={handleChange}
+            value={form.location}
+            required
+            className='shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline'
+            placeholder='Event location'
+          />
+        </div>
+
+        <div className='flex items-center justify-between'>
+          <button
+            type='submit'
+            className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+          >
+            Create Event
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 
