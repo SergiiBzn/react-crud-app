@@ -39,13 +39,12 @@ export const AuthProvider = ({ children }) => {
     // that validates credentials and returns a real token
     
     // Generate a fake token for demonstration purposes
-    const token = "example-token-" + Math.random().toString(36).substring(2);
     
     // Store token in localStorage so it persists between page refreshes
-    localStorage.setItem("token", token);
+    localStorage.setItem("token", userData.token);
     
     // Update our state with the user data and token
-    setUser({ ...userData, token });
+    setUser({ ...userData });
     
     return true; // Return success status
   };
